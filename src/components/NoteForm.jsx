@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const NoteForm = () => {
+const NoteForm = ({ notes, setNotes }) => {
   // const [title, setTitle] = useState("");
   // const [priority, setPriority] = useState("Medium");
   // const [category, setCategory] = useState("Work");
@@ -21,8 +21,31 @@ const NoteForm = () => {
     });
   }
 
+  function handleSubmit(event) {
+    event.preventDefault();
+
+    // Validation
+    if (!formData.title || !formData.description) return;
+
+    // Create note object
+    const newNote = { id: Date.now(), ...formData };
+
+    // Add notes to state
+    setNotes([newNote, ...notes]);
+
+    // Reset form data
+    setFormData({
+      title: "",
+      category: "Personal",
+      priority: "Medium",
+      description: "",
+    });
+
+    console.log(notes);
+  }
+
   return (
-    <form className='space-y-5'>
+    <form onSubmit={handleSubmit} className='space-y-5'>
       <div>
         <label
           htmlFor='title'
@@ -99,7 +122,7 @@ const NoteForm = () => {
           onChange={handleChange}
         ></textarea>
       </div>
-      <button className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3.5 rounded-lg transition-colors duration-100 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50'>
+      <button className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3.5 rounded-lg transition-colors duration-100 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50 cursor-pointer'>
         Add Note
       </button>
     </form>

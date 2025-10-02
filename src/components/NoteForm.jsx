@@ -1,10 +1,25 @@
 import { useState } from "react";
 
 const NoteForm = () => {
-  const [title, setTitle] = useState("");
-  const [priority, setPriority] = useState("Medium");
-  const [category, setCategory] = useState("Work");
-  const [description, setDescription] = useState("");
+  // const [title, setTitle] = useState("");
+  // const [priority, setPriority] = useState("Medium");
+  // const [category, setCategory] = useState("Work");
+  // const [description, setDescription] = useState("");
+
+  const [formData, setFormData] = useState({
+    title: "",
+    category: "Personal",
+    priority: "Medium",
+    description: "",
+  });
+
+  function handleChange(event) {
+    // console.log(event.target.name, event.target.value);
+    setFormData({
+      ...formData,
+      [event.target.name]: event.target.value,
+    });
+  }
 
   return (
     <form className='space-y-5'>
@@ -16,11 +31,12 @@ const NoteForm = () => {
           Title
         </label>
         <input
+          name='title'
           type='text'
           className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100'
           placeholder='Enter note title...'
-          value={title}
-          onChange={(event) => setTitle(event.target.value)}
+          value={formData.title}
+          onChange={handleChange}
         />
       </div>
 
@@ -33,10 +49,11 @@ const NoteForm = () => {
             Priority
           </label>
           <select
+            name='priority'
             type='text'
             className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100 cursor-pointer'
-            value={priority}
-            onChange={(event) => setPriority(event.target.value)}
+            value={formData.priority}
+            onChange={handleChange}
           >
             <option value='High'>🔴 High</option>
             <option value='Medium'>🟠 Medium</option>
@@ -52,10 +69,11 @@ const NoteForm = () => {
             Category
           </label>
           <select
+            name='category'
             type='text'
             className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100 cursor-pointer'
-            value={category}
-            onChange={(event) => setCategory(event.target.value)}
+            value={formData.category}
+            onChange={handleChange}
           >
             <option value='Work'>📁 Work</option>
             <option value='Personal'>🏡 Personal</option>
@@ -72,12 +90,13 @@ const NoteForm = () => {
           Description
         </label>
         <textarea
+          name='description'
           type='text'
           rows='4'
           className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100 resize-none'
           placeholder='Add your notes here...'
-          value={description}
-          onChange={(event) => setDescription(event.target.value)}
+          value={formData.description}
+          onChange={handleChange}
         ></textarea>
       </div>
       <button className='w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3.5 rounded-lg transition-colors duration-100 shadow-lg shadow-blue-900/30 hover:shadow-blue-900/50'>

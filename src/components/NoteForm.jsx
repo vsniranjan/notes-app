@@ -40,8 +40,6 @@ const NoteForm = ({ notes, setNotes }) => {
       priority: "Medium",
       description: "",
     });
-
-    console.log(notes);
   }
 
   return (

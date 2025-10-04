@@ -1,4 +1,4 @@
-const NoteList = ({ notes }) => {
+const NoteList = ({ notes, deleteNote }) => {
   if (notes.length === 0) {
     return <p className='text-center text-gray-500 mt-10'>No Notes Yet</p>;
   }
@@ -35,6 +35,13 @@ const NoteList = ({ notes }) => {
               </div>
             </div>
             <p className='mt-3 text-gray-400'>{note.description}</p>
+
+            <button
+              onClick={() => deleteNote(note.id)}
+              className='mt-3 text-red-500 cursor-pointer transtion hover:text-red-700'
+            >
+              🗑️ Delete
+            </button>
           </div>
         );
       })}

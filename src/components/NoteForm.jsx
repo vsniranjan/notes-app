@@ -1,4 +1,6 @@
 import { useState } from "react";
+import TextInput from "./inputs/TextInput";
+import SelectInput from "./inputs/SelectInput";
 
 const NoteForm = ({ notes, setNotes }) => {
   const [formData, setFormData] = useState({
@@ -49,89 +51,55 @@ const NoteForm = ({ notes, setNotes }) => {
         onClick={() => setIsFormVisible(!isFormVisible)}
         className='w-full bg-[#2f2f2f] border border-gray-700 text-gray-100 py-3 rounded-lg cursor-pointer hover:bg-[#3a3a3a] hover:border-gray-600 transition-all duration-200 font-medium mb-4 shadow-md'
       >
-        {isFormVisible ? "Hide Form ▲" : "Add Note ➕"}
+        {isFormVisible ? "Hide Form" : "Add Note"}
       </button>
       <div
-        className={`overflow-hidden transition-all duration-500 ease ${
+        className={`overflow-hidden transition-all duration-500 ease-in-out ${
           isFormVisible ? "max-h-[800px] opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <form onSubmit={handleSubmit} className='space-y-5'>
-          <div>
-            <label
-              htmlFor='title'
-              className='block text-sm font-medium text-gray-300 mb-2'
-            >
-              Title
-            </label>
-            <input
-              name='title'
-              type='text'
-              className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100'
-              placeholder='Enter note title...'
-              value={formData.title}
+          <TextInput
+            name={"title"}
+            label={"Title"}
+            value={formData.title}
+            onChange={handleChange}
+            placeholder={"Enter note title..."}
+          />
+
+          <div className='grid grid-cols-2 gap-4'>
+            <SelectInput
+              name={"priority"}
+              label={"Priority"}
+              value={formData.priority}
               onChange={handleChange}
+              options={[
+                { value: "High", label: "🔴 High" },
+                { value: "Medium", label: "🟠 Medium" },
+                { value: "Low", label: "🟢 Low" },
+              ]}
+            />
+            <SelectInput
+              name={"category"}
+              label={"Category"}
+              value={formData.category}
+              onChange={handleChange}
+              options={[
+                { value: "Work", label: "📁 Work" },
+                { value: "Personal", label: "🏡 Personal" },
+                { value: "Ideas", label: "💡 Ideas" },
+              ]}
             />
           </div>
 
-          <div className='grid grid-cols-2 gap-4'>
-            <div>
-              <label
-                htmlFor='priority'
-                className='block text-sm font-medium text-gray-300 mb-2'
-              >
-                Priority
-              </label>
-              <select
-                name='priority'
-                type='text'
-                className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100 cursor-pointer'
-                value={formData.priority}
-                onChange={handleChange}
-              >
-                <option value='High'>🔴 High</option>
-                <option value='Medium'>🟠 Medium</option>
-                <option value='Low'>🟢 Low</option>
-              </select>
-            </div>
-
-            <div>
-              <label
-                htmlFor='category'
-                className='block text-sm font-medium text-gray-300 mb-2'
-              >
-                Category
-              </label>
-              <select
-                name='category'
-                type='text'
-                className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100 cursor-pointer'
-                value={formData.category}
-                onChange={handleChange}
-              >
-                <option value='Work'>📁 Work</option>
-                <option value='Personal'>🏡 Personal</option>
-                <option value='Ideas'>💡 Ideas</option>
-              </select>
-            </div>
-          </div>
-
           <div>
-            <label
-              htmlFor='description'
-              className='block text-sm font-medium text-gray-300 mb-2'
-            >
-              Description
-            </label>
-            <textarea
-              name='description'
-              type='text'
-              rows='4'
-              className='w-full px-4 py-3 bg-[#2f2f2f] border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-100 resize-none'
-              placeholder='Add your notes here...'
+            <TextInput
+              name={"description"}
+              label={"Description"}
               value={formData.description}
               onChange={handleChange}
-            ></textarea>
+              placeholder={"Add your notes here..."}
+            />
           </div>
           <button
             type='submit'
